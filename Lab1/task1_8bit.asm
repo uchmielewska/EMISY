@@ -26,7 +26,7 @@ lcall	write_command
 lcall	us_delay
 
 ;end initialization
-mov	LCD_BUS, #'U'
+mov	LCD_BUS, #'U'				;sending letter 'U'
 lcall	write_data
 lcall	us_delay
 
