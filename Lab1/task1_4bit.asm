@@ -13,7 +13,6 @@ mov	LCD_BUS, #00100000B			;function set - setting to 4 bits mode
 lcall	write_command	
 lcall	us_delay
 lcall	write_command				;function set - sending 4 most significant bits
-lcall	us_delay
 
 mov	LCD_BUS, #10000000B			;function set - sending 4 least significant bits
 lcall	write_command	
@@ -22,7 +21,6 @@ lcall	us_delay
 
 mov	LCD_BUS, #00000000B			;display ON/OFF control - sending 4 most significant bits
 lcall 	write_command
-lcall	us_delay
 
 mov	LCD_BUS, #11000000B			;display ON/OFF control - sending 4 least significant bits
 lcall 	write_command
@@ -31,7 +29,6 @@ lcall	us_delay
 
 mov	LCD_BUS, #00000000B			;display clear - sending 4 most significant bits
 lcall	write_command
-lcall	ms_delay
 
 mov	LCD_BUS, #00010000B			;display clear - sending 4 least significant bits
 lcall	write_command
@@ -40,7 +37,6 @@ lcall	ms_delay
 
 mov	LCD_BUS, #00000000B			;entry mode set - sending 4 most significant bits
 lcall	write_command
-lcall	us_delay
 
 mov	LCD_BUS, #01100000B			;entry mode set - sending 4 least significant bits
 lcall	write_command
@@ -50,7 +46,6 @@ lcall	us_delay
 ;end initialization
 mov	LCD_BUS, #01010000B			;sending 4 most significant bits of letter 'U'
 lcall	write_data
-lcall	us_delay
 
 mov	LCD_BUS, #01010000B			;sending 4 least significant bits of letter 'U'
 lcall	write_data
