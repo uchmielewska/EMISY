@@ -6,6 +6,7 @@ SEG_BUS     EQU     P1                 ;segment bus
 
 
 	mov	R0, #000000001b		;set first from the left display at the beginning
+	setb    DEC_CS              		;enable decoder
 
 	jmp     skip_handler            	;skip interrupt handler
 
@@ -17,9 +18,6 @@ SEG_BUS     EQU     P1                 ;segment bus
 	jb	ACC.1, display1		;check 1'st bit - second from the left display
 	jb	ACC.2, display2		;check 2'nd bit - third from the left display
 	jb	ACC.3, display3		;check 3'rd bit - fourth from the left display
-
-	setb    DEC_CS              		;enable decoder
-	reti					;return
 
 
 	skip_handler:     
