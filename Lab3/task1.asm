@@ -1,7 +1,7 @@
-LCD_RS EQU P3.0	;RS pin connected to P3.0
+LCD_RS EQU P3.0		;RS pin connected to P3.0
 LCD_E EQU P3.1		;E pin connected to P3.1
 LCD_BUS EQU P1		;Data bus takes pins from P1.0 to P1.7
-SWITCH EQU P2.5	;switch five
+SWITCH EQU P2.5		;switch five
 
 ;wait for more than 30ms
 mov	R2, #20
@@ -75,7 +75,7 @@ write_data:
 	ret
 
 us_delay:
-	mov	R0, #20			;delay is more than 39us so 20*2 (djnz takes 2us)
+	mov	R0, #20				;delay is more than 39us so 20*2 (djnz takes 2us)
 	djnz	R0, $				;decrement and jump if R0 reaches 0
 	ret					;return from the subroutine
 	
