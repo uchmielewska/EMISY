@@ -15,57 +15,51 @@ mov	LCD_BUS, #00111000B			;function set
 lcall	write_command	
 lcall	us_delay
 
-mov	LCD_BUS, #00001100B			;display ON/OFF control
+mov	LCD_BUS, #00001110B			;display ON/OFF control
 lcall 	write_command
 lcall	us_delay
-
-mov	LCD_BUS, #00000001B			;display clear
-lcall	write_command
-lcall	ms_delay
 
 mov	LCD_BUS, #00000110B			;entry mode set
 lcall	write_command
 lcall	us_delay
 
+switch_control:
+	mov	LCD_BUS, #00000001B		;display clear
+	lcall	write_command
+	lcall	ms_delay
+	jb	SWITCH, $			;waits for the switch to be pressed (if switch is 1-not pressed, routine jumps to itself)
 
+	;send name
+	mov	LCD_BUS, #'U'
+	lcall	write_data
+	lcall	us_delay
 
-;send name
-mov	LCD_BUS, #'U'
-lcall	write_data
-lcall	us_delay
+	mov	LCD_BUS, #'R'
+	lcall	write_data
+	lcall	us_delay
 
-mov	LCD_BUS, #'R'
-lcall	write_data
-lcall	us_delay
+	mov	LCD_BUS, #'S'
+	lcall	write_data
+	lcall	us_delay
 
-mov	LCD_BUS, #'S'
-lcall	write_data
-lcall	us_delay
+	mov	LCD_BUS, #'Z'
+	lcall	write_data
+	lcall	us_delay
 
-mov	LCD_BUS, #'Z'
-lcall	write_data
-lcall	us_delay
+	mov	LCD_BUS, #'U'
+	lcall	write_data
+	lcall	us_delay
 
-mov	LCD_BUS, #'U'
-lcall	write_data
-lcall	us_delay
+	mov	LCD_BUS, #'L'
+	lcall	write_data
+	lcall	us_delay
 
-mov	LCD_BUS, #'L'
-lcall	write_data
-lcall	us_delay
+	mov	LCD_BUS, #'A'
+	lcall	write_data
+	lcall	us_delay
 
-mov	LCD_BUS, #'A'
-lcall	write_data
-lcall	us_delay
-
-
-
-mov	LCD_BUS, #00001000B			;initially LCD is set to be turned off, but the data stays in the memory
-lcall 	write_command
-lcall	ms_delay
-
-lcall	switch_control				;call function waiting fot the button to be pressed
-
+	jnb	SWITCH, $			;waits for the switch to be turned off
+	lcall	switch_control			;call function which waits for pressed button
 
 
 write_command:
@@ -92,16 +86,3 @@ ms_delay:					;3*256*2 is more than 1,53ms as expected
 		djnz	R0, $			;djnz takes 2 cycles - 2us
 		djnz	R1, delay_jump		;decrement R1 and loop if not yet 0
 		ret
-
-switch_control:
-	jb	SWITCH, $			;waits for the switch to be pressed (if switch is 1-not pressed, routine jumps to itself)
-	mov	LCD_BUS, #00001111B		;turn on LCD 
-	lcall	write_command
-	lcall	ms_delay
-	
-	jnb	SWITCH, $			;waits for the switch to be turned off
-	mov	LCD_BUS, #00001000B		;LCD turned off, but the data stays in the memory
-	lcall 	write_command
-	lcall	ms_delay
-		
-	jmp	switch_control
